@@ -1,0 +1,13 @@
+temp.py
+pep8radius/temp
+pep8radius/tests/temp
+tests/temp
+
+*.pyc
+.coverage
+.coverage.*
+
+htmlcov/
+dist/
+build/
+*.egg-info/

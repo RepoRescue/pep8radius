@@ -1,0 +1,73 @@
+=== usability_validate ===
+[validate] cwd = /tmp/pep8radius-clean (outside rescue tree: OK)
+[validate] pep8radius bin = /tmp/pep8radius-clean/bin/pep8radius
+[validate] imported pep8radius.radius from /home/zhihao/hdd/RepoRescue_Clean/repos/rescue_kimi/pep8radius/pep8radius/radius.py
+[validate] imported pep8radius.vcs from /home/zhihao/hdd/RepoRescue_Clean/repos/rescue_kimi/pep8radius/pep8radius/vcs.py
+[validate] imported pep8radius.diff from /home/zhihao/hdd/RepoRescue_Clean/repos/rescue_kimi/pep8radius/pep8radius/diff.py
+[validate] imported pep8radius.main from /home/zhihao/hdd/RepoRescue_Clean/repos/rescue_kimi/pep8radius/pep8radius/main.py
+[validate] workdir = /tmp/pep8radius_validate_0pg1quh1
+[validate] --version rc=0, stdout='0.9.2'
+[validate] --diff rc=0
+[validate] file after rewrite:
+---
+def foo(x):
+    y = x+1
+    z = y*2
+    return z
+
+
+def bar(a, b, c):
+    return a+b+c
+---
+USABLE
+
+=== scenario_validate ===
+[scenario] pep8radius = /tmp/pep8radius-clean/bin/pep8radius
+[scenario] workdir = /tmp/pep8radius_scenario_037aof7_
+[scenario] hook rc=0
+[scenario] summary head:
+--- /tmp/pep8radius_scenario_037aof7_/pkg/feature.py
++++ /tmp/pep8radius_scenario_037aof7_/pkg/feature.py
+@@ -1,5 +1,5 @@
+-def compute( values ):
+-    total=0
+-    for v in  values:
+-        total+=v
+-    return  total
++def compute(values):
++    total = 0
++    for v in values:
++        total += v
++    return total
+--- /tmp/pep8radius_scenario_037aof7_/pkg/helper.py
++++ /tmp/pep8radius_scenario_037aof7_/pkg/helper.py
+@@ -2,5 +2,5 @@
+     return a + b
+ 
+ 
+-def mul(a,b):
++def mul(a, b):
+     return a*b
+
+SCENARIO_USABLE
+
+=== bug_hunt ===
+=== bug_hunt ===
+  P1 empty-commit: OK
+  P2 binary-mixed: OK
+  P3 conflict-markers: BUG
+  P4 latin-1: BUG
+  P5 unicode-path: BUG
+  P6 idempotent: OK
+  P7 3.13 surface: OK
+
+--- FINDINGS ---
+* P3 conflict-markers: silently rewrote conflicted file, lost markers!
+after='def f(x):\n\n\n<< << << < HEAD\nreturn x\n== == == =\nreturn x + 1\n>>>>>> > branch\n'
+* P4 latin1: rc=1, stderr=Traceback (most recent call last):
+  File "/tmp/pep8radius-clean/bin/pep8radius", line 7, in <module>
+    sys.exit(_main())
+             ~~~~~^^
+  File "/home/zhihao/hdd/RepoRescue_Clean/repos/rescue_kimi/pep8radius/pep8radius/main.py", line 283, in _main
+    return sys.exit(main(args=args, vc=vc, c
+* P5 unicode-path: not reformatted: 'def h( x ):\n    y=x\n    return  y\n'

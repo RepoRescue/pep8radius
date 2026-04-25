@@ -1,0 +1,12 @@
+[run]
+omit =
+    tests/temp/*.py
+    tests/test_*.py
+    tests/subtemp/*.py
+
+data_file = .coverage
+
+[report]
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
